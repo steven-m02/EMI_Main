@@ -14,6 +14,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+
+ // declare components from xml
     TextView textView4, textView5, textView6, textView8, textView7,
             textView9;
     EditText inputTextMortgage, inputTextInterest, inputTextAmmortization, inputTextFrequency;
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+       //link components
         textView8 = findViewById(R.id.textView8);
 
 
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         inputTextInterest = findViewById(R.id.inputTextInterest);
         inputTextFrequency = findViewById(R.id.inputTextFrequency);
 
-
+//set button to work
         calculate.setOnClickListener(v -> result());
 
 
@@ -48,25 +52,28 @@ public class MainActivity extends AppCompatActivity {
     public void result() {
 
         try {
-            // Convert strings to double
 
-            // Get text from EditText, convert to String, and then parse to double
+
+            // Get text from EditText and convert to string
             String mortgageString = inputTextMortgage.getText().toString();
             String interestString = inputTextInterest.getText().toString();
             String frequencyString = inputTextFrequency.getText().toString();
 
+            //change to double
             double mortgage = Double.parseDouble(mortgageString);
             double interest = Double.parseDouble(interestString);
             double frequency = Double.parseDouble(frequencyString);
 
+            //calculate EMI
             interest = interest / (12 * 100);
             frequency = frequency * 12;
             double EMI = (mortgage * interest * (float) Math.pow(1 + interest, frequency)) / (float) (Math.pow(1 + interest, frequency) - 1);
 
+            //display EMI
             textView8.setText("EMI: " + String.format("%.2f", EMI));
 
         } catch (NumberFormatException e) {
-            // Handle the exception if the input is not a valid number
+            // produces text if not valid number
             textView8.setText("Invalid input. Please enter valid numbers.");
         }
     }
